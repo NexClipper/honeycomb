@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-exporter
+  namespace: ${NAMESPACE}
+  labels:
+    app: nginx-exporter
+spec:
+  selector:
+    matchLabels:
+      app: nginx-exporter
+  template:
+    metadata:
+      labels:
+        app: nginx-exporter
+    spec:
+      containers:
+      - name: nginx-exporter
+        image: 'nginx/nginx-prometheus-exporter:0.9.0'
+        args:
+          - '-nginx.scrape-uri=http://${nginx_address}:8080/stub_status'
+        ports:
+          - name: nginx-exporter-port
+            containerPort: 9113
+            protocol: TCP
+        imagePullPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-exporter
+  name: nginx-exporter
+  namespace: ${NAMESPACE}
+spec:
+  ports:
+  - port: 9113
+    protocol: TCP
+    targetPort: 9113
+    name: metrics
+  selector:
+    app: nginx-exporter
+  sessionAffinity: None
+  type: ClusterIP
