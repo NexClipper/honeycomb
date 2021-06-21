@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-exporter
+  name: nc-nginx-exporter
   namespace: ${NAMESPACE}
   labels:
-    app: nginx-exporter
+    app: nc-nginx-exporter
 spec:
   selector:
     matchLabels:
-      app: nginx-exporter
+      app: nc-nginx-exporter
   template:
     metadata:
       labels:
-        app: nginx-exporter
+        app: nc-nginx-exporter
     spec:
       containers:
       - name: nginx-exporter
@@ -36,8 +36,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: nginx-exporter
-  name: nginx-exporter
+    app: nc-nginx-exporter
+  name: nc-nginx-exporter
   namespace: ${NAMESPACE}
 spec:
   ports:
@@ -46,6 +46,6 @@ spec:
     targetPort: 9113
     name: metrics
   selector:
-    app: nginx-exporter
+    app: nc-nginx-exporter
   sessionAffinity: None
   type: ClusterIP
