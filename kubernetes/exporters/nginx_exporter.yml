@@ -17,8 +17,13 @@ spec:
       containers:
       - name: nginx-exporter
         image: 'nginx/nginx-prometheus-exporter:0.9.0'
+        env:
+        - name: NGINX_ADDR
+          value: ${ADDRESS}
+        - name: NGINX_PORT
+          value: ${PORT}
         args:
-          - '-nginx.scrape-uri=http://${nginx_address}:8080/stub_status'
+          - '-nginx.scrape-uri=http://${ADDR}:${PORT}/stub_status'
         ports:
           - name: nginx-exporter-port
             containerPort: 9113
