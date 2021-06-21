@@ -1,0 +1,2 @@
+# honeycomb
+Provisioning Resource Templates
