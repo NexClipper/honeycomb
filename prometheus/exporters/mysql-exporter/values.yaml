@@ -1,4 +1,4 @@
-# Default values for prometheus-mysql-exporter.
+# Default values for mysql-exporter.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
