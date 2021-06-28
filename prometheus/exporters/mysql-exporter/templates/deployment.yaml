@@ -4,15 +4,18 @@ metadata:
   name: {{ template "prometheus-mysql-exporter.fullname" . }}
   labels:
     {{- include "prometheus-mysql-exporter.labels" . | nindent 4 }}
+    managed: {{ .Values.global.managed }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "prometheus-mysql-exporter.selectorLabels" . | nindent 6 }}
+      managed: {{ .Values.global.managed }}
   template:
     metadata:
       labels:
         {{- include "prometheus-mysql-exporter.selectorLabels" . | nindent 8 }}
+        managed: {{ .Values.global.managed }}
 {{- if .Values.podLabels }}
 {{ toYaml .Values.podLabels | trim | indent 8 }}
 {{- end }}

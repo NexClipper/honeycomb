@@ -4,6 +4,9 @@
 
 replicaCount: 1
 
+global:
+  managed: exporterhub
+
 image:
   repository: "prom/mysqld-exporter"
   tag: "v0.12.1"
