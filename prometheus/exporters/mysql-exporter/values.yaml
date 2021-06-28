@@ -106,10 +106,13 @@ collectors: {}
   # heartbeat.table: heartbeat
 
 # mysql connection params which build the DATA_SOURCE_NAME env var of the docker container
+# "{{ .Values.mysql.user }}:$(DB_PASSWORD)@{{ if .Values.mysql.protocol }}{{ .Values.mysql.protocol }}{{ end }}({{ .Values.mysql.host }}:{{ .Values.mysql.port }})/{{ if .Values.mysql.db }}{{ .Values.mysql.db }}{{ end }}{{ if .Values.mysql.param }}?{{ .Values.mysql.param }}{{ end }}"
 mysql:
   db: ""
-  host: "localhost"
+  # host: "wordpress-mysql.default.svc.cluster.local"
+  host: "{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local"
   param: ""
+  # secret
   pass: "password"
   port: 3306
   protocol: ""

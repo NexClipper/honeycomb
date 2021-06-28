@@ -66,7 +66,8 @@ spec:
                 name: {{ template "prometheus-mysql-exporter.secret" . }}
           {{- else }}
             - name: DATA_SOURCE_NAME
-              value: "{{ .Values.mysql.user }}:$(DB_PASSWORD)@{{ if .Values.mysql.protocol }}{{ .Values.mysql.protocol }}{{ end }}({{ .Values.mysql.host }}:{{ .Values.mysql.port }})/{{ if .Values.mysql.db }}{{ .Values.mysql.db }}{{ end }}{{ if .Values.mysql.param }}?{{ .Values.mysql.param }}{{ end }}"
+              # value: "{{ .Values.mysql.user }}:{{ .Values.mysql.pass }}@{{ if .Values.mysql.protocol }}{{ .Values.mysql.protocol }}{{ end }}({{ .Values.mysql.host }}:{{ .Values.mysql.port }})/{{ if .Values.mysql.db }}{{ .Values.mysql.db }}{{ end }}{{ if .Values.mysql.param }}?{{ .Values.mysql.param }}{{ end }}"
+              value: "{{ .Values.mysql.user }}:$(DB_PASSWORD)@{{ if .Values.mysql.protocol }}{{ .Values.mysql.protocol }}{{ end }}({{ tpl .Values.mysql.host . }}:{{ .Values.mysql.port }})/{{ if .Values.mysql.db }}{{ .Values.mysql.db }}{{ end }}{{ if .Values.mysql.param }}?{{ .Values.mysql.param }}{{ end }}"
           {{- end }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
